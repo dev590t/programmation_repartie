@@ -1,1 +1,2 @@
-javac src/*.java -cp bin/
+TP:
+	javac src/*.java -cp bin/

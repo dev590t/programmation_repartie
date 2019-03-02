@@ -1,7 +1,7 @@
 class MonObjet {
     ThreadLocal<Integer> last;//nb ecriture de chaque thread
-    int value;//valeur commune
-    int valuebis;//valeur commune
+     int value;//valeur commune
+     int valuebis;//valeur commune
     public MonObjet(int init) {
         value = init;
         last = new ThreadLocal<Integer>() {
@@ -15,8 +15,8 @@ class MonObjet {
     }
     public void add() {
         last.set(last.get() + 1);
-        value = value + 1;
-        valuebis = valuebis + 1;
+        value ++;
+        valuebis ++;
     }
 }
 class MyThread2 extends Thread {
