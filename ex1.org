@@ -1,0 +1,95 @@
+** ex1
+*** ex1.1
+L'exécution de programme donne:
+#+BEGIN_EXAMPLE
+la thread Thread-0 value=2247, valuebis=2253 et  last=1000
+la thread Thread-1 value=5996, valuebis=5994 et  last=5000
+value=5996, valuebis=5994 et  last=0
+#+END_EXAMPLE
+**** les variables "value" et valuebis" sont accédé par concurrence par Thread-0 et Thread-1.
+Soit a une variable
+L'instruction a = a + 1 peut se compiler en assembleur comme
+read(a)
+calcul
+write(a)
+
+Lors de execution parallele de 2 instruction "a = a + 1" par plusieurs threads tel que leur interval d'exécution se chevauche. L'instruction peut ne pas se dérouler correctement si l'operation n'est pas fait de manière atomique, 
+voici un cas possible
+#+BEGIN_EXAMPLE
+read(a) par Thread-0
+read(a) par Thread-1
+calcul par Thread-0
+calcul par Thread-1
+write(a) par Thread-1
+write(a) par Thread-0
+#+END_EXAMPLE
+ce qui fait que après 2 execution de  a = a + 1, la valeur de a n'a augmenté de seulement 1
+
+ce qui explique à la fin de execution de programme et de Thread-1,
+la valeur de "value" et "valuebis" est inférieur à 6000, alors que il y a en tout 6000 incrémentation de leur valeur, qui était initialement 0
+**** la variable "last" est local à 1 thread, et independant des autres
+ce qui fait que il n'y pas de accès concurrent sur lui, et donc son incrémentation fonctionne correctement à chaque instruction "last.set(last.get() + 1)"
+*** ex1.2
+Si l’instruction value=value +1 et valuebis=valuebis +1 étaient atomiques,
+les valeurs de o.value et o.valuebis affichées lors de l’exécution de TP.main est
+#+BEGIN_EXAMPLE
+la thread Thread-0 value=1741, valuebis=1749 et  last=1000
+la thread Thread-1 value=6000, valuebis=6000 et  last=5000
+value=6000, valuebis=6000 et  last=0
+#+END_EXAMPLE
+
+L'incrémentation de "value" et "valuebis" fonctionne correctement
+Le programme se termine avec 1 valeur de 6000, qui correspont au 6000 incrémentation exécuté
+
+*** ex1.3
+L'exécution de programme donne:
+#+BEGIN_EXAMPLE
+la thread Thread-0 value=1944, valuebis=1978 et  last=1000
+la thread Thread-1 value=5963, valuebis=5988 et  last=5000
+value=5963, valuebis=5988 et  last=0
+#+END_EXAMPLE
+
+mettre les variables "value" et "valuebis" en volatil ne permet pas l'atomicité de l'opération de incrémentation.
+le cas de figure cité dans ex1.1 est 1 cas possible où 2 incrémentation simultané sur 1 même variable échoue
+#+BEGIN_EXAMPLE
+read(a) par Thread-0
+read(a) par Thread-1
+calcul par Thread-0
+calcul par Thread-1
+write(a) par Thread-1
+write(a) par Thread-0
+#+END_EXAMPLE
+
+*** ex1.4
+L'exécution de programme donne:
+#+BEGIN_EXAMPLE
+la thread Thread-0 value=2178, valuebis=2185 et  last=1000
+la thread Thread-1 value=5996, valuebis=5992 et  last=5000
+value=5996, valuebis=5992 et  last=0
+#+END_EXAMPLE
+
+"a++" n'est pas 1 opération atomique, son compilation en assembleur est une suite de instruction bytecode.
+Il ne permet pas atomicité de incrémentation
+
+*** ex1.5
+l’usage de ThreadLocal pour la variable last rend la variable local pour chaque thread. Chaque thread a une copie de "last" avec sa valeur initialisé.
+
+La conséquence est que
+
+**** chaque thread a son valeur pour "last"
+L'exécution de programme donne:
+#+BEGIN_EXAMPLE
+la thread Thread-0 value=2178, valuebis=2185 et  last=1000
+la thread Thread-1 value=5996, valuebis=5992 et  last=5000
+value=5996, valuebis=5992 et  last=0
+#+END_EXAMPLE
+Il y a 3 thread dans le programme, 
+- thread principal de main
+- Thread-0
+- Thread-1
+
+on voit que pour les resultats des last est différent pour Thread-1 et thread principal, alors que l'affichage de "last" par Thread-1 se fait avant celui de thread principal, et il y a aucune écriture sur "last" entre temps.
+
+**** incrémentation de last se déroule correctement
+  il n'y pas de accès concurrent sur "last" de chaque thread, et donc son incrémentation fonctionne correctement à chaque instruction "last.set(last.get() + 1)"
+
