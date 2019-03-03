@@ -35,3 +35,8 @@ public class Peterson implements Lock{
 	   Peterson p2 = new Peterson(1);
    }
  }
+ 
+ 
+ 
+ 
+ 
