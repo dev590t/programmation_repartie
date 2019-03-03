@@ -45,12 +45,7 @@ public class Boulangerie implements Lock{
 		flag[nom] = false;
 		
 	}
+	
+	
 
 }
-
-
-
-
-
-
-
