@@ -1,0 +1,7 @@
+** bug in peterson
+*** DONE use synchronized to elimine bug lié atomicité
+   CLOSED: [2019-03-04 lun. 00:07]
+bug is donc from no atomic
+** TODO khawla ex3.1
+** TODO work ex2
+** TODO fusion work

@@ -1,8 +1,8 @@
 class Peterson_locked_object extends Partaged_object  {
 
     // thread-local index, 0 or 1
-    private static boolean[] flag = new boolean[2] ;
-    private static int victim;
+    private volatile static boolean[] flag = new boolean[2] ;
+    private volatile static int victim;
     public Peterson_locked_object(int init) {
         super(init);
     }

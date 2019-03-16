@@ -1,0 +1,13 @@
+execution:
+cd bin
+java Test_boul
+
+exemple execution:
+$ java Test_boul
+...
+la thread Thread-1 value=60000, valuebis=60000 et  nb_write=50000
+value=60000, valuebis=60000 et  nb_write=0
+$ java Test_boul
+...
+la thread Thread-1 value=60000, valuebis=60000 et  nb_write=50000
+value=60000, valuebis=60000 et  nb_write=0

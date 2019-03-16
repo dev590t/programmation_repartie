@@ -1,0 +1,17 @@
+executer:
+cd bin
+java Test_perterson
+
+exemple:
+2012 $ java Test_perterson 
+la thread Thread-0 value=20710, valuebis=20717 et  nb_write=10000
+la thread Thread-1 value=60000, valuebis=60000 et  nb_write=50000
+value=60000, valuebis=60000 et  nb_write=0
+2012 $ java Test_perterson 
+la thread Thread-0 value=18226, valuebis=18237 et  nb_write=10000
+la thread Thread-1 value=60000, valuebis=60000 et  nb_write=50000
+value=60000, valuebis=60000 et  nb_write=0
+2012 $ java Test_perterson 
+la thread Thread-0 value=22339, valuebis=22360 et  nb_write=10000
+la thread Thread-1 value=60000, valuebis=60000 et  nb_write=50000
+value=60000, valuebis=60000 et  nb_write=0

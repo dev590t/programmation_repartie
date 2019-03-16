@@ -1,0 +1,8 @@
+compiler:
+javac *java
+
+executer programme:
+ex3.1
+java Test_boul
+ex3.2
+java Test_peterson

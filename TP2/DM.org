@@ -1,0 +1,34 @@
+** note
+SWMR registre
+** ex1
+*** (b)
+**** on veut montrer que "Pour j != i, scan_j[i] = i ou scan_j[i] = −1"
+*** Pour j != i, scan_j ⊆ scan_i ou scan_i ⊆ scan_j 
+**** scan_j ⊆ scan_i
+<=>  pour tout (i,j),  (scan_j[i] != −1) ==>  (scan_j[i] = scan_i[i])
+<=>  pour tout (i,j), ¬ (scan_j[i] != −1)  ∨ (scan_j[i] = scan_i[i])
+
+
+( la relation ⊆ est A ⊆ B si et seulement si A[i] != −1 alors A[i] = B[i])
+** ex2
+*** 2
+**** (a)
+***** Dans quelle cas une exécution ne termine pas?
+un thread A qui fait scan()
+
+Si il existe toujours un processus qui update() la mémoire lors de la double lecture de A. Ainsi, le thread A ne peut jamais se terminer.
+***** Quelle condition de progression assure cette implémentation?
+****** l'algorithme n'est pas wait-free
+car la progression de scan() depend que les autres threads ne change pas la mémoire pendant sa double lecture
+****** l'algorithme est non bloquant
+car
+- soit il retourne le resultat
+- soit il est en boucle continue en attendant le bon moment pour sortir de la boucle
+
+ il y a pas utilisation de mutex, il ne se bloque pas sur une instruction
+****** l'algorithme est obstruction-free
+car 
+- soit il retourne le resultat
+- soit il est en boucle continue en attendant le bon moment pour sortir de la boucle
+**** (b) quel diff entre AtomicStampedReference<T> et Stamped<T> :no_compris:
+pas de spec is given for Stamped<T>
