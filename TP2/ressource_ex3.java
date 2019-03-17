@@ -1,3 +1,4 @@
+
 il y a une explication sur wait free snapshot
     https://en.wikipedia.org/wiki/Shared_snapshot_objects#Multi-Writer_Multi-Reader_implementation_by_Afek_et_al.
 

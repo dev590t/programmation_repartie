@@ -1,6 +1,6 @@
-** note
-SWMR registre
 ** ex1
+*** ?                                                            :no_compris:
+"scan_j[i] = −1" pourquoi il y a 1 "-1" dans le tableau. C'est la valeur initial avant update?
 *** (b)
 **** on veut montrer que "Pour j != i, scan_j[i] = i ou scan_j[i] = −1"
 *** Pour j != i, scan_j ⊆ scan_i ou scan_i ⊆ scan_j 
@@ -32,3 +32,6 @@ car
 - soit il est en boucle continue en attendant le bon moment pour sortir de la boucle
 **** (b) quel diff entre AtomicStampedReference<T> et Stamped<T> :no_compris:
 pas de spec is given for Stamped<T>
+**** c [Ljava.lang.Object; cannot be cast to [LAtomicStampedReference; :no_compris:
+*** Afin de réaliser une implémentation atomique                 :no_compris:
+en quoi c'est atomique
