@@ -8,6 +8,47 @@
 <=>  pour tout (i,j),  (scan_j[i] != −1) ==>  (scan_j[i] = scan_i[i])
 <=>  pour tout (i,j), ¬ (scan_j[i] != −1)  ∨ (scan_j[i] = scan_i[i])
 
+a) Par l'absurde: scani[i] = -1 
+donc il n'y a pas eu de update(i) auparavant par la thread i OR il y en a bien eu un et l'opération est atomique et aucune autre thread ne peut venir modifier la valeur à la case i.
+
+Donc a est VRAIE
+
+b) Deux cas: 
+si le scan de la thread j s'est exécutée avant le update de la thread i alors le scanj[i] donnera -1. 
+Sinon il donnera i
+VRAIE
+
+c) Voici un ordre d'exécution Contre exemple:
+ ti.update(i);
+ ti.scan();
+ tj.update(j)
+ tj.scan()
+ FAUX
+
+ d)
+Contre exemple:
+ ti.update(i)
+ tj.update(j)
+ ti.scan()
+ tj.scan()
+ FAUX
+
+ e) 
+
+i différent de j et les opérations sont atomiques donc:
+A v B
+Pour que ce soit faux => A faux ET B faux
+
+A faux => scanj[i]= -1 donc le j a fait scan donc il a fait update
+donc B est forcément vraie
+ET VICE VERSA:
+B faux => A vrai
+
+LE TOUT EST VRAI
+
+f) scanj < scani <=> scanj[i]!=-1 => scanj[i]=scani[i]
+ scanj[i]!=-1 => scanj[i]=i donc scanj[i]=scani[i]
+
 
 ( la relation ⊆ est A ⊆ B si et seulement si A[i] != −1 alors A[i] = B[i])
 ** ex2
