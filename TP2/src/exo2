@@ -20,6 +20,7 @@ Exercice 2:Implémentation non-blocking .
           
       question2-a:
       
-          si pour deux scans successifs ,l'estampille du même objet change (le deux lectures sont differentes) alors cette execution ne termine pas .
-          
+          Si pour deux scans successifs ,la valeur de l'estampille du même objet change (le deux lectures sont differentes) alors cette execution ne termine pas .
+          Cette implémentation assure la condition
+
       
