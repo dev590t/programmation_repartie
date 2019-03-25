@@ -1,0 +1,25 @@
+Exercice 2:Implémentation non-blocking .
+
+
+
+    question1-a:
+    
+       Les executions de ce programmes ne donnent pas le même affichage .
+            execution1 : 
+                scan de 0: 0 3 3 3 2 2 1 1 1 0 0 0 0 0 0 
+            execution2 :
+                scan de 0: 0 3 1 0 0 0 0 0 0 0 0 0 0 0 0 
+            execution3 : 
+                scan de 0: 0 3 0 0 0 0 0 0 0 0 0 0 0 0 0 
+
+    
+      question1-b:
+     
+          -l'operation update est atomique 
+          -le Scan n'est pas atomique ,il ne termine pas: il est interrompu par des updates (c'est le cas pour l'execution 1, 2 et 3,equestio 1-a )
+          
+      question2-a:
+      
+          si pour deux scans successifs ,l'estampille du même objet change (le deux lectures sont differentes) alors cette execution ne termine pas .
+          
+      
