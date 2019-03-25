@@ -1,13 +1,4 @@
 ** ex1
-*** ?                                                            :no_compris:
-"scan_j[i] = −1" pourquoi il y a 1 "-1" dans le tableau. C'est la valeur initial avant update?
-*** (b)
-**** on veut montrer que "Pour j != i, scan_j[i] = i ou scan_j[i] = −1"
-*** Pour j != i, scan_j ⊆ scan_i ou scan_i ⊆ scan_j 
-**** scan_j ⊆ scan_i
-<=>  pour tout (i,j),  (scan_j[i] != −1) ==>  (scan_j[i] = scan_i[i])
-<=>  pour tout (i,j), ¬ (scan_j[i] != −1)  ∨ (scan_j[i] = scan_i[i])
-
 a) Par l'absurde: scani[i] = -1 
 donc il n'y a pas eu de update(i) auparavant par la thread i OR il y en a bien eu un et l'opération est atomique et aucune autre thread ne peut venir modifier la valeur à la case i.
 
@@ -49,10 +40,30 @@ LE TOUT EST VRAI
 f) scanj < scani <=> scanj[i]!=-1 => scanj[i]=scani[i]
  scanj[i]!=-1 => scanj[i]=i donc scanj[i]=scani[i]
 
+** Exercice 2:Implémentation non-blocking .
 
-( la relation ⊆ est A ⊆ B si et seulement si A[i] != −1 alors A[i] = B[i])
-** ex2
-*** 2
+*** question1
+**** question1-a:
+     
+        Les executions de ce programmes ne donnent pas le même affichage .
+             execution1 : 
+                 scan de 0: 0 3 3 3 2 2 1 1 1 0 0 0 0 0 0 
+             execution2 :
+                 scan de 0: 0 3 1 0 0 0 0 0 0 0 0 0 0 0 0 
+             execution3 : 
+                 scan de 0: 0 3 0 0 0 0 0 0 0 0 0 0 0 0 0 
+**** question1-b:
+      
+           -l'operation update n'est pas atomique
+            a_table n'est pas proteger par le modificateur volatil, donc écriture "a_table[me]=v;" n'est pas atomique
+            
+           -le Scan n'est pas atomique ,
+pendant la execution de collect(), 1 update peut venir changer les données
+
+comme on peut le voir dans l'execution 1, 2 et 3 de question 1-a ci-dessus
+
+           
+*** question2
 **** (a)
 ***** Dans quelle cas une exécution ne termine pas?
 un thread A qui fait scan()
@@ -71,8 +82,35 @@ car
 car 
 - soit il retourne le resultat
 - soit il est en boucle continue en attendant le bon moment pour sortir de la boucle
-**** (b) quel diff entre AtomicStampedReference<T> et Stamped<T> :no_compris:
-pas de spec is given for Stamped<T>
-**** c [Ljava.lang.Object; cannot be cast to [LAtomicStampedReference; :no_compris:
-*** Afin de réaliser une implémentation atomique                 :no_compris:
-en quoi c'est atomique
+**** (b) 
+***** L'implementation avec AtomicStampedReference<T> est atomique
+car scan() retourne une lecture seulement si 2 lectures successifs est identique
+or si 2 lectures successifs est identique, alors ces lecture n'est pas entrelacé avec 1 update(),
+donc pas de concurrence, donc c'est atomique
+***** si AtomicStampedReference<T> était remplacer par une classe Stamped<T>
+alors, cette implémentation est pas atomique.
+car on a perdu l'atomicité à l'accès de objet T encapsulé dans le stamped
+** ex3
+*** 1)
+**** Est-ce que le scan et le update terminent toujours?
+***** scan termine toujours
+scan va d'abord faire 2 collects, ces operations terminent
+après les 2 collects, scan decide de retourner collect ou un snapshot. Cet operation termine aussi
+donc scan() termine
+***** update terminent toujours
+update est une sequence de instruction contenant scan() et autre instructions
+scan() et autre instructions termine toujours
+donc la concatenation de ces instructions termine toujours aussi
+donc update terminent toujours
+
+
+
+*** 2)
+soit n la taille du tableau
+on fait au plus n-1  collect pour réaliser un scan
+donc scan terminent toujours
+
+comme scan terminent toujours
+donc update aussi en suivant le meme raisonnemt de ex3.1
+
+l’implémention obtenue est atomique
